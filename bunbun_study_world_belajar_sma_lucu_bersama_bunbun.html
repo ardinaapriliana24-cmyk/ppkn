@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BunBun Study World - Belajar SMA Bareng Kelinci Lucu! 🐰✨</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts: Fredoka & Quicksand -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #FFF0F5;
+            background-image: radial-gradient(#FFC0CB 0.75px, transparent 0.75px), radial-gradient(#FFC0CB 0.75px, #FFF0F5 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        h1, h2, h3, h4, .font-title {
+            font-family: 'Fredoka', cursive;
+        }
+        .bounce-hover:hover {
+            transform: translateY(-5px) scale(1.02);
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-press:active {
+            transform: translateY(2px) scale(0.98);
+        }
+        .fluffy-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+            border: 3px solid #FFE4E1;
+            box-shadow: 0 8px 24px -4px rgba(255, 182, 193, 0.4);
+            border-radius: 2rem;
+        }
+        .fluffy-border {
+            border: 3px dashed #FFB6C1;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF0F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFB6C1;
+            border-radius: 10px;
+        }
+        /* Flashcard flip effect */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        /* Cute floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="text-pink-900 min-h-screen flex flex-col justify-between selection:bg-pink-300 selection:text-pink-900">
+
+    <!-- Top Decorative Banner -->
+    <div class="bg-gradient-to-r from-pink-300 via-pink-200 to-pink-300 py-1.5 px-4 text-center text-xs sm:text-sm text-pink-800 font-semibold tracking-wide flex items-center justify-center gap-2 shadow-sm">
+        <span>✨</span> Yuk tingkatkan nilaimu bareng BunBun! Gratis & Seru! <span>🐰</span>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="sticky top-2 z-40 px-3 sm:px-8 mt-2">
+        <nav class="max-w-6xl mx-auto fluffy-card p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+            <!-- Brand Logo & Mascot -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
+                <div class="relative bg-pink-100 p-2 rounded-2xl border-2 border-pink-300 animate-float">
+                    <!-- Cute SVG Bunny Icon -->
+                    <svg class="w-8 h-8 text-pink-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 14c-3.31 0-6 2.69-6 6 0 .55.45 1 1 1h10c.55 0 1-.45 1-1 0-3.31-2.69-6-6-6z"/>
+                        <path d="M8.5 2C7.12 2 6 3.12 6 4.5V11c0 .55.45 1 1 1s1-.45 1-1V4.5c0-.28.22-.5.5-.5s.5.22.5.5V10c0 .55.45 1 1 1s1-.45 1-1V4.5C11 3.12 9.88 2 8.5 2z"/>
+                        <path d="M15.5 2c-1.38 0-2.5 1.12-2.5 2.5V10c0 .55.45 1 1 1s1-.45 1-1V4.5c0-.28.22-.5.5-.5s.5.22.5.5V11c0 .55.45 1 1 1s1-.45 1-1V4.5C18 3.12 16.88 2 15.5 2z"/>
+                    </svg>
+                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500"></span>
+                    </span>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold text-pink-600 leading-none">BunBun Study</h1>
+                    <p class="text-xs text-pink-400 font-medium">Teman Belajar SMA 💖</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-1 max-w-full">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-pink-500 text-white shadow-md hover:bg-pink-600 flex items-center gap-1.5">
+                    <i data-lucide="home" class="w-4 h-4"></i> Beranda
+                </button>
+                <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-pink-100 text-pink-600 hover:bg-pink-200 flex items-center gap-1.5">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Materi
+                </button>
+                <button onclick="switchTab('flashcards')" id="nav-flashcards" class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-pink-100 text-pink-600 hover:bg-pink-200 flex items-center gap-1.5">
+                    <i data-lucide="layers" class="w-4 h-4"></i> Cards
+                </button>
+                <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-pink-100 text-pink-600 hover:bg-pink-200 flex items-center gap-1.5">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> Quiz
+                </button>
+                <button onclick="switchTab('pomodoro')" id="nav-pomodoro" class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-pink-100 text-pink-600 hover:bg-pink-200 flex items-center gap-1.5">
+                    <i data-lucide="timer" class="w-4 h-4"></i> Timer
+                </button>
+            </div>
+
+            <!-- Audio Toggle & Stars Widget -->
+            <div class="hidden md:flex items-center gap-3">
+                <div class="flex items-center gap-1.5 bg-pink-50 px-3 py-1.5 rounded-full border border-pink-200 text-xs font-bold text-pink-600">
+                    <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                    <span id="user-stars">120</span> Wortel
+                </div>
+                <button id="sound-toggle" onclick="toggleSound()" class="p-2 bg-pink-100 hover:bg-pink-200 text-pink-600 rounded-full transition" title="Toggle Sound Effect">
+                    <i data-lucide="volume-2" id="sound-icon" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-6 w-full flex-grow">
+
+        <!-- ================= SECTION: DASHBOARD ================= -->
+        <section id="section-dashboard" class="tab-content space-y-6">
+            <!-- Hero Banner -->
+            <div class="fluffy-card p-6 sm:p-10 relative overflow-hidden bg-gradient-to-br from-white via-pink-50 to-pink-100">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-7 space-y-4">
+                        <span class="inline-block px-3 py-1 bg-pink-200 text-pink-700 text-xs font-bold rounded-full">
+                            ✨ Platform Belajar SMA Ter-Kawaii ✨
+                        </span>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold text-pink-600 leading-tight">
+                            Yuk Belajar SMA Bareng <span class="text-pink-500 underline decoration-wavy decoration-pink-300">BunBun!</span> 🐰🌸
+                        </h2>
+                        <p class="text-pink-700 text-sm sm:text-base leading-relaxed">
+                            Pahami materi Matematika, Biologi, Fisika, & Bahasa dengan visual interaktif, simulasi Punnett Square, kalkulator rumus, dan kuis berhadiah badge lucu!
+                        </p>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <button onclick="switchTab('materi')" class="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-2xl font-bold shadow-lg bounce-hover btn-press flex items-center gap-2">
+                                <i data-lucide="play-circle" class="w-5 h-5"></i> Mulai Belajar Now!
+                            </button>
+                            <button onclick="switchTab('quiz')" class="px-6 py-3 bg-white hover:bg-pink-50 text-pink-600 border-2 border-pink-300 rounded-2xl font-bold shadow-sm bounce-hover btn-press flex items-center gap-2">
+                                <i data-lucide="trophy" class="w-5 h-5"></i> Ikut Kuis
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Bunny Mascot Illustration Container -->
+                    <div class="md:col-span-5 flex justify-center relative">
+                        <div class="w-56 h-56 sm:w-64 sm:h-64 bg-pink-200/50 rounded-full flex items-center justify-center relative animate-pulse-soft border-4 border-white shadow-inner">
+                            <div class="text-center">
+                                <!-- Mascot Illustration (SVG) -->
+                                <svg class="w-36 h-36 mx-auto text-pink-500 drop-shadow-md animate-float" viewBox="0 0 100 100" fill="currentColor">
+                                    <!-- Bunny Ears -->
+                                    <ellipse cx="35" cy="25" rx="8" ry="22" fill="#FFB6C1" stroke="#FF69B4" stroke-width="3"/>
+                                    <ellipse cx="35" cy="25" rx="4" ry="15" fill="#FFE4E1"/>
+                                    <ellipse cx="65" cy="25" rx="8" ry="22" fill="#FFB6C1" stroke="#FF69B4" stroke-width="3"/>
+                                    <ellipse cx="65" cy="25" rx="4" ry="15" fill="#FFE4E1"/>
+                                    <!-- Bunny Head -->
+                                    <circle cx="50" cy="55" r="28" fill="#FFFFFF" stroke="#FFB6C1" stroke-width="3"/>
+                                    <!-- Cheeks -->
+                                    <circle cx="35" cy="60" r="5" fill="#FFB6C1" opacity="0.6"/>
+                                    <circle cx="65" cy="60" r="5" fill="#FFB6C1" opacity="0.6"/>
+                                    <!-- Eyes -->
+                                    <circle cx="42" cy="52" r="3" fill="#4A4A4A"/>
+                                    <circle cx="58" cy="52" r="3" fill="#4A4A4A"/>
+                                    <circle cx="43" cy="51" r="1" fill="#FFFFFF"/>
+                                    <circle cx="59" cy="51" r="1" fill="#FFFFFF"/>
+                                    <!-- Nose & Mouth -->
+                                    <polygon points="50,57 47,54 53,54" fill="#FF69B4"/>
+                                    <path d="M 47,60 Q 50,63 53,60" fill="none" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <div class="bg-white px-4 py-1.5 rounded-full border-2 border-pink-300 shadow-sm text-xs font-bold text-pink-600 mt-2 inline-block">
+                                    "Semangat belajarnya ya, Kak! 🥕"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Quick Cards Grid -->
+            <div>
+                <h3 class="text-xl font-bold text-pink-600 mb-4 flex items-center gap-2">
+                    <i data-lucide="book" class="w-5 h-5"></i> Pilih Mata Pelajaran Favoritmu
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Math Card -->
+                    <div onclick="openSubject('math')" class="fluffy-card p-5 cursor-pointer bounce-hover border-l-8 border-l-pink-400 group">
+                        <div class="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center text-pink-500 mb-3 group-hover:bg-pink-500 group-hover:text-white transition">
+                            <i data-lucide="calculator" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-pink-700">Matematika</h4>
+                        <p class="text-xs text-pink-500 mt-1">Fungsi Kuadrat, Trigonometri, & Kalkulator Rumus Interaktif.</p>
+                        <span class="inline-block mt-3 text-xs font-bold text-pink-600 underline">Pelajari & Hitung →</span>
+                    </div>
+
+                    <!-- Biology Card -->
+                    <div onclick="openSubject('bio')" class="fluffy-card p-5 cursor-pointer bounce-hover border-l-8 border-l-emerald-300 group">
+                        <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-500 mb-3 group-hover:bg-emerald-400 group-hover:text-white transition">
+                            <i data-lucide="dna" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-emerald-700">Biologi</h4>
+                        <p class="text-xs text-emerald-600 mt-1">Genetika Mendel, DNA, & Simulator Persilangan Bunny.</p>
+                        <span class="inline-block mt-3 text-xs font-bold text-emerald-600 underline">Simulasi Genetik →</span>
+                    </div>
+
+                    <!-- Physics Card -->
+                    <div onclick="openSubject('physics')" class="fluffy-card p-5 cursor-pointer bounce-hover border-l-8 border-l-sky-300 group">
+                        <div class="w-12 h-12 bg-sky-50 rounded-2xl flex items-center justify-center text-sky-500 mb-3 group-hover:bg-sky-400 group-hover:text-white transition">
+                            <i data-lucide="zap" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-sky-700">Fisika</h4>
+                        <p class="text-xs text-sky-600 mt-1">Hukum Newton, Gaya, & Simulasi Bunny Mendorong Wortel!</p>
+                        <span class="inline-block mt-3 text-xs font-bold text-sky-600 underline">Coba Simulasi →</span>
+                    </div>
+
+                    <!-- Language Card -->
+                    <div onclick="openSubject('lang')" class="fluffy-card p-5 cursor-pointer bounce-hover border-l-8 border-l-purple-300 group">
+                        <div class="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-500 mb-3 group-hover:bg-purple-400 group-hover:text-white transition">
+                            <i data-lucide="languages" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-purple-700">Bahasa & Grammar</h4>
+                        <p class="text-xs text-purple-600 mt-1">Kosakata UTBK/TOEFL, Tenses, & Tips Teks Tesis Bahasa Indonesia.</p>
+                        <span class="inline-block mt-3 text-xs font-bold text-purple-600 underline">Cek Vocabulary →</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Motivation & Achievements Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div class="fluffy-card p-5 bg-pink-50 flex items-center gap-4">
+                    <div class="p-3 bg-pink-200 rounded-2xl text-pink-600">
+                        <i data-lucide="award" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-pink-700">Badge Kelinci Pintar</h5>
+                        <p class="text-xs text-pink-500">Selesaikan kuis untuk klaim sertifikat & badge khusus!</p>
+                    </div>
+                </div>
+                <div class="fluffy-card p-5 bg-pink-50 flex items-center gap-4">
+                    <div class="p-3 bg-pink-200 rounded-2xl text-pink-600">
+                        <i data-lucide="heart" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-pink-700">Belajar Nyaman & Fun</h5>
+                        <p class="text-xs text-pink-500">Desain soft pink bikin mata tidak lelah saat belajar malam.</p>
+                    </div>
+                </div>
+                <div class="fluffy-card p-5 bg-pink-50 flex items-center gap-4">
+                    <div class="p-3 bg-pink-200 rounded-2xl text-pink-600">
+                        <i data-lucide="clock" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-pink-700">Pomodoro Wortel</h5>
+                        <p class="text-xs text-pink-500">Atur waktu belajarmu dengan teknik Pomodoro interaktif.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION: MATERI SMA ================= -->
+        <section id="section-materi" class="tab-content hidden space-y-6">
+            <!-- Search and Filter Bar -->
+            <div class="fluffy-card p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="relative w-full sm:w-80">
+                    <input type="text" id="materi-search" oninput="filterMateri()" placeholder="Cari materi SMA (misal: Genetika, Kuadrat)..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl border-2 border-pink-200 focus:outline-none focus:border-pink-400 text-sm text-pink-800 bg-white shadow-inner">
+                    <i data-lucide="search" class="w-4 h-4 text-pink-400 absolute left-3.5 top-3.5"></i>
+                </div>
+                <div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto">
+                    <button onclick="filterSubjectTab('all')" class="subj-tab-btn px-4 py-1.5 rounded-xl text-xs font-bold bg-pink-500 text-white shadow-sm">Semua</button>
+                    <button onclick="filterSubjectTab('math')" class="subj-tab-btn px-4 py-1.5 rounded-xl text-xs font-bold bg-pink-100 text-pink-600 hover:bg-pink-200">Matematika</button>
+                    <button onclick="filterSubjectTab('bio')" class="subj-tab-btn px-4 py-1.5 rounded-xl text-xs font-bold bg-pink-100 text-pink-600 hover:bg-pink-200">Biologi</button>
+                    <button onclick="filterSubjectTab('physics')" class="subj-tab-btn px-4 py-1.5 rounded-xl text-xs font-bold bg-pink-100 text-pink-600 hover:bg-pink-200">Fisika</button>
+                    <button onclick="filterSubjectTab('lang')" class="subj-tab-btn px-4 py-1.5 rounded-xl text-xs font-bold bg-pink-100 text-pink-600 hover:bg-pink-200">Bahasa</button>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div id="materi-container" class="space-y-8">
+
+                <!-- MATERI 1: MATEMATIKA -->
+                <div class="materi-card fluffy-card p-6 border-l-8 border-l-pink-400 space-y-4" data-subject="math">
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-xs font-bold flex items-center gap-1">
+                            <i data-lucide="calculator" class="w-3.5 h-3.5"></i> Matematika SMA Kelas 10-11
+                        </span>
+                        <span class="text-xs text-pink-400 font-medium">Topik: Fungsi Kuadrat & Titik Puncak</span>
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-pink-600">Fungsi Kuadrat & Rumus Puncak Parabola 📐</h3>
+                    <p class="text-sm text-pink-800 leading-relaxed">
+                        Fungsi kuadrat memiliki bentuk umum: <b class="bg-pink-100 px-2 py-0.5 rounded text-pink-700">y = ax² + bx + c</b> (dengan a ≠ 0). Grafik fungsi kuadrat berbentuk Parabola. Jika <code class="text-pink-600 font-bold">a > 0</code> parabola terbuka ke atas (senyum 😊), jika <code class="text-pink-600 font-bold">a < 0</code> parabola terbuka ke bawah (cemberut ☹️).
+                    </p>
+
+                    <!-- Formula breakdown box -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-2">
+                        <div class="bg-pink-50 p-4 rounded-2xl border border-pink-200">
+                            <h4 class="font-bold text-pink-700 text-sm mb-1">1. Titik Puncak Parabola (Xp, Yp)</h4>
+                            <p class="text-xs text-pink-600 mb-2">Digunakan untuk mencari nilai maksimum atau minimum:</p>
+                            <div class="text-center bg-white p-3 rounded-xl border border-pink-200 font-mono font-bold text-pink-600 text-sm">
+                                Xp = -b / (2a) <br>
+                                Yp = -D / (4a)  di mana D = b² - 4ac
+                            </div>
+                        </div>
+                        <div class="bg-pink-50 p-4 rounded-2xl border border-pink-200">
+                            <h4 class="font-bold text-pink-700 text-sm mb-1">2. Diskriminan (D = b² - 4ac)</h4>
+                            <ul class="text-xs text-pink-700 space-y-1 list-disc list-inside">
+                                <li><b>D > 0</b>: Parabola memotong sumbu X di 2 titik.</li>
+                                <li><b>D = 0</b>: Parabola menyinggung sumbu X di 1 titik.</li>
+                                <li><b>D < 0</b>: Parabola tidak menyentuh sumbu X sama sekali.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Mini Calculator for Math -->
+                    <div class="bg-white p-5 rounded-2xl border-2 border-pink-200 shadow-sm space-y-3">
+                        <h4 class="font-bold text-pink-600 text-sm flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-pink-400"></i>
+                            Kalkulator Interaktif Titik Puncak BunBun:
+                        </h4>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="text-xs text-pink-500 font-bold">Nilai a</label>
+                                <input type="number" id="math-a" value="1" class="w-full p-2 border rounded-xl text-center text-sm border-pink-300 font-bold">
+                            </div>
+                            <div>
+                                <label class="text-xs text-pink-500 font-bold">Nilai b</label>
+                                <input type="number" id="math-b" value="-4" class="w-full p-2 border rounded-xl text-center text-sm border-pink-300 font-bold">
+                            </div>
+                            <div>
+                                <label class="text-xs text-pink-500 font-bold">Nilai c</label>
+                                <input type="number" id="math-c" value="3" class="w-full p-2 border rounded-xl text-center text-sm border-pink-300 font-bold">
+                            </div>
+                        </div>
+                        <button onclick="calculateQuadratic()" class="w-full py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-xl text-xs font-bold shadow transition btn-press">
+                            Hitung Titik Puncak & Diskriminan! ✨
+                        </button>
+                        <div id="math-result" class="p-3 bg-pink-50 rounded-xl text-xs text-pink-700 text-center font-semibold">
+                            Klik tombol di atas untuk melihat hasil perhitungan!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MATERI 2: BIOLOGI & PUNNETT SQUARE SIMULATOR -->
+                <div class="materi-card fluffy-card p-6 border-l-8 border-l-emerald-400 space-y-4" data-subject="bio">
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold flex items-center gap-1">
+                            <i data-lucide="dna" class="w-3.5 h-3.5"></i> Biologi SMA Kelas 12
+                        </span>
+                        <span class="text-xs text-emerald-600 font-medium">Topik: Hukum Mendel & Persilangan Genetik</span>
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-emerald-700">Genetika & Simulator Punnett Square Kelinci 🧬🐰</h3>
+                    <p class="text-sm text-emerald-900 leading-relaxed">
+                        Menurut <b>Hukum I Mendel</b> (Segregasi Bebas), pasangan alel akan berpisah secara bebas saat pembentukan gamet. Mari kita lihat persilangan warna bulu kelinci:
+                        <b>Alel W (Dominan = Bulu Putih)</b> dan <b>Alel w (Resesif = Bulu Pink)</b>.
+                    </p>
+
+                    <!-- Interactive Punnett Square Simulator -->
+                    <div class="bg-emerald-50/60 p-5 rounded-2xl border-2 border-emerald-200 space-y-4">
+                        <h4 class="font-bold text-emerald-800 text-sm flex items-center gap-2">
+                            <i data-lucide="dices" class="w-4 h-4 text-emerald-600"></i> Simulator Persilangan Genetik Bunny Monohibrid
+                        </h4>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-xs font-bold text-emerald-700">Genotipe Induk 1 (Ayah Bunny):</label>
+                                <select id="parent1" onchange="runPunnett()" class="w-full p-2 mt-1 rounded-xl border border-emerald-300 text-xs font-bold text-emerald-800 bg-white">
+                                    <option value="WW">WW (Heterozigot Dominan - Bulu Putih)</option>
+                                    <option value="Ww" selected>Ww (Heterozigot - Bulu Putih)</option>
+                                    <option value="ww">ww (Homozigot Resesif - Bulu Pink Cute)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-emerald-700">Genotipe Induk 2 (Ibu Bunny):</label>
+                                <select id="parent2" onchange="runPunnett()" class="w-full p-2 mt-1 rounded-xl border border-emerald-300 text-xs font-bold text-emerald-800 bg-white">
+                                    <option value="WW">WW (Heterozigot Dominan - Bulu Putih)</option>
+                                    <option value="Ww" selected>Ww (Heterozigot - Bulu Putih)</option>
+                                    <option value="ww">ww (Homozigot Resesif - Bulu Pink Cute)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Punnett Table Display -->
+                        <div class="flex flex-col items-center justify-center pt-2">
+                            <div id="punnett-grid" class="grid grid-cols-3 gap-2 text-center text-xs font-bold w-full max-w-xs">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+
+                        <div id="punnett-summary" class="bg-white p-3 rounded-xl border border-emerald-200 text-xs text-emerald-800 text-center font-semibold">
+                            <!-- Summary results -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MATERI 3: FISIKA & SIMULASI HUKUM NEWTON -->
+                <div class="materi-card fluffy-card p-6 border-l-8 border-l-sky-400 space-y-4" data-subject="physics">
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-bold flex items-center gap-1">
+                            <i data-lucide="zap" class="w-3.5 h-3.5"></i> Fisika SMA Kelas 10
+                        </span>
+                        <span class="text-xs text-sky-600 font-medium">Topik: Hukum II Newton (F = m × a)</span>
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-sky-700">Hukum II Newton & Simulasi Dorong Raksasa Wortel 🥕</h3>
+                    <p class="text-sm text-sky-900 leading-relaxed">
+                        <b>Hukum II Newton</b> menyatakan bahwa percepatan (<code class="font-bold">a</code>) suatu benda berbanding lurus dengan gaya total (<code class="font-bold">F</code>) yang bekerja padanya dan berbanding terbalik dengan massanya (<code class="font-bold">m</code>).
+                        Rumus: <b class="bg-sky-100 px-2 py-0.5 rounded text-sky-800">F = m × a</b> atau <b class="bg-sky-100 px-2 py-0.5 rounded text-sky-800">a = F / m</b>.
+                    </p>
+
+                    <!-- Interactive Physics Simulator Canvas / Animation -->
+                    <div class="bg-sky-50/70 p-5 rounded-2xl border-2 border-sky-200 space-y-4">
+                        <h4 class="font-bold text-sky-800 text-sm flex items-center gap-2">
+                            <i data-lucide="play" class="w-4 h-4 text-sky-600"></i> Simulasi Interactive: BunBun Mendorong Raksasa Wortel
+                        </h4>
+
+                        <!-- Interactive Control Sliders -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <div class="flex justify-between text-xs font-bold text-sky-800 mb-1">
+                                    <span>Gaya Dorong BunBun (F):</span>
+                                    <span id="force-val" class="text-pink-600">50 N</span>
+                                </div>
+                                <input type="range" id="input-force" min="10" max="150" value="50" oninput="updatePhysics()" class="w-full accent-pink-500">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-bold text-sky-800 mb-1">
+                                    <span>Massa Wortel (m):</span>
+                                    <span id="mass-val" class="text-pink-600">10 kg</span>
+                                </div>
+                                <input type="range" id="input-mass" min="2" max="50" value="10" oninput="updatePhysics()" class="w-full accent-pink-500">
+                            </div>
+                        </div>
+
+                        <!-- Physics Visual Container -->
+                        <div class="relative h-32 bg-white rounded-xl border border-sky-200 overflow-hidden flex items-end p-2">
+                            <!-- Track Line -->
+                            <div class="absolute bottom-4 left-0 right-0 h-1 bg-sky-200"></div>
+
+                            <!-- Bunny & Carrot Object Group -->
+                            <div id="physics-object" class="absolute bottom-4 left-4 flex items-end gap-1 transition-all duration-300">
+                                <!-- Bunny Pusher -->
+                                <div class="text-3xl animate-bounce">🐰</div>
+                                <!-- Force Arrow Indicator -->
+                                <div class="text-xs font-bold text-pink-500 -translate-y-2">➔ <span id="arrow-force">50N</span></div>
+                                <!-- Giant Carrot -->
+                                <div class="text-4xl transition-transform" id="carrot-icon">🥕</div>
+                            </div>
+                        </div>
+
+                        <!-- Calculation Output -->
+                        <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-sky-200 text-xs">
+                            <span class="font-bold text-sky-800">Percepatan Dihasilkan (a = F/m):</span>
+                            <span id="accel-result" class="font-mono font-extrabold text-pink-600 text-base">5.00 m/s²</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MATERI 4: BAHASA INDONESIA & INGGRIS -->
+                <div class="materi-card fluffy-card p-6 border-l-8 border-l-purple-400 space-y-4" data-subject="lang">
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold flex items-center gap-1">
+                            <i data-lucide="languages" class="w-3.5 h-3.5"></i> Bahasa Indonesia & Inggris SMA
+                        </span>
+                        <span class="text-xs text-purple-600 font-medium">Topik: Structure, Tenses, & Teks Argumentasi</span>
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-purple-700">Kosakata Penting UTBK & Struktur Teks Tesis 📝</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-purple-50 p-4 rounded-2xl border border-purple-200 space-y-2">
+                            <h4 class="font-bold text-purple-800 text-sm">💡 Bahasa Indonesia: Struktur Teks Eksposisi/Tesis</h4>
+                            <ol class="text-xs text-purple-900 space-y-1.5 list-decimal list-inside">
+                                <li><b>Tesis (Pernyataan Pendapat)</b>: Bagian pembuka berisi sudut pandang penulis terhadap topik.</li>
+                                <li><b>Argumentasi</b>: Alasan, fakta, atau data pendukung untuk memperkuat tesis.</li>
+                                <li><b>Penegasan Ulang (Reiteration)</b>: Kesimpulan ringkas di akhir paragraf.</li>
+                            </ol>
+                        </div>
+
+                        <div class="bg-purple-50 p-4 rounded-2xl border border-purple-200 space-y-2">
+                            <h4 class="font-bold text-purple-800 text-sm">🇬🇧 English Tips: Conditional Sentences</h4>
+                            <ul class="text-xs text-purple-900 space-y-1.5 list-disc list-inside">
+                                <li><b>Type 1 (Real)</b>: If + Simple Present, Will + Verb 1 <br><em class="text-pink-600">"If BunBun studies hard, she will pass the exam."</em></li>
+                                <li><b>Type 2 (Unreal Present)</b>: If + Simple Past, Would + Verb 1</li>
+                                <li><b>Type 3 (Unreal Past)</b>: If + Past Perfect, Would have + V3</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= SECTION: FLASHCARDS ================= -->
+        <section id="section-flashcards" class="tab-content hidden space-y-6">
+            <div class="text-center space-y-2 max-w-lg mx-auto">
+                <h2 class="text-3xl font-bold text-pink-600">Flashcards Revision BunBun 🎴</h2>
+                <p class="text-xs text-pink-500">Klik atau Tap kartu di bawah untuk membalik dan mengingat formula/istilah penting!</p>
+            </div>
+
+            <!-- Flashcard Carousel / Container -->
+            <div class="flex flex-col items-center justify-center min-h-[320px]">
+                <div id="flashcard-box" onclick="flipCard()" class="perspective-1000 w-full max-w-md h-64 cursor-pointer">
+                    <div id="flashcard-inner" class="relative w-full h-full transform-style-3d rounded-3xl fluffy-card shadow-xl p-6 flex flex-col justify-between items-center text-center border-4 border-pink-200">
+                        <!-- Front Side -->
+                        <div class="absolute inset-0 backface-hidden p-6 flex flex-col justify-between items-center bg-gradient-to-b from-white to-pink-50 rounded-3xl">
+                            <span id="fc-category" class="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-xs font-bold">Matematika</span>
+                            <div class="my-auto">
+                                <h3 id="fc-question" class="text-xl font-bold text-pink-700">Apa rumus diskriminan (D) fungsi kuadrat?</h3>
+                                <p class="text-xs text-pink-400 mt-2">(Klik untuk balik kartu ✨)</p>
+                            </div>
+                            <span id="fc-num" class="text-xs text-pink-400 font-bold">Kartu 1 / 5</span>
+                        </div>
+
+                        <!-- Back Side -->
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-between items-center bg-pink-500 text-white rounded-3xl">
+                            <span class="px-3 py-1 bg-white/20 text-white rounded-full text-xs font-bold">Jawaban ✨</span>
+                            <div class="my-auto">
+                                <p id="fc-answer" class="text-2xl font-extrabold font-mono">D = b² - 4ac</p>
+                                <p id="fc-detail" class="text-xs opacity-90 mt-2">D > 0 (2 akar nyata), D = 0 (1 akar kembar), D < 0 (imajiner).</p>
+                            </div>
+                            <span class="text-xs opacity-75">BunBun bangga padamu! 🐰</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex items-center gap-4 mt-6">
+                    <button onclick="prevCard()" class="p-3 bg-white hover:bg-pink-100 border-2 border-pink-300 rounded-2xl text-pink-600 font-bold shadow-sm bounce-hover">
+                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                    </button>
+                    <button onclick="shuffleCards()" class="px-4 py-2 bg-pink-200 hover:bg-pink-300 rounded-2xl text-pink-700 text-xs font-bold flex items-center gap-2">
+                        <i data-lucide="shuffle" class="w-4 h-4"></i> Acak Kartu
+                    </button>
+                    <button onclick="nextCard()" class="p-3 bg-white hover:bg-pink-100 border-2 border-pink-300 rounded-2xl text-pink-600 font-bold shadow-sm bounce-hover">
+                        <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION: QUIZ ZONE ================= -->
+        <section id="section-quiz" class="tab-content hidden space-y-6">
+            <!-- Quiz Start Header / Container -->
+            <div id="quiz-intro" class="fluffy-card p-6 sm:p-10 text-center space-y-4 max-w-2xl mx-auto">
+                <div class="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mx-auto text-pink-500 text-4xl border-2 border-pink-300 animate-float">
+                    🏆
+                </div>
+                <h2 class="text-3xl font-bold text-pink-600">Quiz Zone SMA BunBun! 🌸</h2>
+                <p class="text-sm text-pink-700 leading-relaxed">
+                    Uji pemahamanmu seputar Matematika, Biologi, Fisika, & Bahasa. Dapatkan skor sempurna untuk membuka <b>Sertifikat Kelinci Pintar</b> yang lucu!
+                </p>
+                <div class="pt-2">
+                    <button onclick="startQuiz()" class="px-8 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-2xl font-bold text-base shadow-lg bounce-hover btn-press inline-flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-5 h-5"></i> Mulai Kuis Sekarang!
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active Quiz Container -->
+            <div id="quiz-body" class="hidden fluffy-card p-6 max-w-2xl mx-auto space-y-6">
+                <!-- Progress Header -->
+                <div class="flex items-center justify-between text-xs font-bold text-pink-600 border-b border-pink-100 pb-3">
+                    <span id="quiz-progress-text">Soal 1 dari 5</span>
+                    <span id="quiz-score-live" class="flex items-center gap-1 bg-pink-100 px-3 py-1 rounded-full">
+                        <i data-lucide="star" class="w-3.5 h-3.5 text-yellow-500 fill-yellow-500"></i> Skor: 0
+                    </span>
+                </div>
+
+                <!-- Question Text -->
+                <div>
+                    <h3 id="quiz-question" class="text-lg sm:text-xl font-bold text-pink-700">Pertanyaan akan muncul di sini...</h3>
+                </div>
+
+                <!-- Multiple Choice Options -->
+                <div id="quiz-options" class="space-y-3">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Feedback Banner -->
+                <div id="quiz-feedback" class="hidden p-3 rounded-2xl text-xs font-bold text-center"></div>
+
+                <!-- Next Button -->
+                <div class="flex justify-end pt-2">
+                    <button id="quiz-next-btn" onclick="nextQuestion()" class="hidden px-6 py-2.5 bg-pink-500 hover:bg-pink-600 text-white rounded-xl text-xs font-bold shadow transition btn-press">
+                        Soal Selanjutnya →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Result & Certificate Screen -->
+            <div id="quiz-result" class="hidden fluffy-card p-6 sm:p-8 text-center max-w-xl mx-auto space-y-6">
+                <div class="space-y-2">
+                    <span class="text-5xl">🎉🐰</span>
+                    <h2 class="text-3xl font-bold text-pink-600">Hasil Kuis Kamu!</h2>
+                    <p class="text-xs text-pink-500">Hebat banget sudah menyelesaikan kuis BunBun!</p>
+                </div>
+
+                <div class="bg-pink-50 p-6 rounded-2xl border-2 border-pink-200">
+                    <p class="text-xs font-bold text-pink-500">SKOR AKHIR</p>
+                    <p id="final-score" class="text-5xl font-extrabold text-pink-600 my-2">100</p>
+                    <p id="final-message" class="text-xs font-semibold text-pink-700">Sempurna! Kamu master SMA sejati! 🌟</p>
+                </div>
+
+                <!-- Certificate Display -->
+                <div id="certificate-box" class="fluffy-border p-6 bg-white rounded-2xl space-y-3 text-center relative overflow-hidden">
+                    <div class="text-xs font-bold text-pink-400 tracking-widest uppercase">Sertifikat Kelulusan BunBun</div>
+                    <h3 class="text-xl font-bold text-pink-600">Kelinci Cerdas Ter-Kawaii ✨</h3>
+                    <p class="text-xs text-pink-700">Diberikan kepada siswa berprestasi yang telah menyelesaikan Kuis SMA dengan hasil gemilang.</p>
+                    <div class="pt-2 flex justify-center">
+                        <span class="px-4 py-1.5 bg-pink-100 text-pink-600 rounded-full text-xs font-bold border border-pink-300">
+                            Verified by BunBun Academic 🐰
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex justify-center gap-3">
+                    <button onclick="startQuiz()" class="px-6 py-2.5 bg-white border-2 border-pink-300 text-pink-600 hover:bg-pink-50 rounded-xl text-xs font-bold shadow-sm">
+                        Ulangi Kuis 🔄
+                    </button>
+                    <button onclick="claimReward()" class="px-6 py-2.5 bg-pink-500 hover:bg-pink-600 text-white rounded-xl text-xs font-bold shadow btn-press">
+                        Klaim Bonus Wortel! 🥕
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION: POMODORO TIMER ================= -->
+        <section id="section-pomodoro" class="tab-content hidden space-y-6">
+            <div class="max-w-md mx-auto fluffy-card p-6 sm:p-8 text-center space-y-6">
+                <div>
+                    <span class="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-xs font-bold">Fokus Belajar Kelinci ⏱️</span>
+                    <h2 class="text-2xl font-bold text-pink-600 mt-2">Pomodoro BunBun</h2>
+                    <p class="text-xs text-pink-500 mt-1">Gunakan teknik 25 menit fokus & 5 menit istirahat!</p>
+                </div>
+
+                <!-- Bunny Status Illustration -->
+                <div class="w-32 h-32 mx-auto bg-pink-100 rounded-full flex items-center justify-center border-4 border-pink-200 shadow-inner">
+                    <span id="pomo-bunny-emoji" class="text-5xl animate-bounce">📚🐰</span>
+                </div>
+
+                <p id="pomo-status" class="text-xs font-bold text-pink-600">BunBun sedang menemanimu belajar...</p>
+
+                <!-- Timer Digits -->
+                <div id="pomo-timer" class="text-6xl font-extrabold font-mono text-pink-600 tracking-wider">
+                    25:00
+                </div>
+
+                <!-- Controls -->
+                <div class="flex items-center justify-center gap-3">
+                    <button id="pomo-start-btn" onclick="togglePomodoro()" class="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-2xl font-bold text-sm shadow-md bounce-hover btn-press flex items-center gap-2">
+                        <i data-lucide="play" class="w-4 h-4"></i> Mulai Fokus
+                    </button>
+                    <button onclick="resetPomodoro()" class="p-3 bg-pink-100 hover:bg-pink-200 text-pink-600 rounded-2xl font-bold transition">
+                        <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- Mode Switchers -->
+                <div class="flex justify-center gap-2 pt-2 border-t border-pink-100">
+                    <button onclick="setPomoMode('study')" id="mode-study" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-pink-500 text-white">25m Fokus</button>
+                    <button onclick="setPomoMode('break')" id="mode-break" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-pink-100 text-pink-600">5m Istirahat 🥕</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-8 border-t border-pink-200 bg-white/80 backdrop-blur py-4 text-center text-xs text-pink-500 font-medium">
+        <p>Made with 💖 for SMA Students in Indonesia | 🐰 BunBun Study World</p>
+    </footer>
+
+    <script>
+        // Global Audio Context / Sound FX
+        let soundEnabled = true;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playCuteSound(freq = 587.33, type = 'sine') { // D5 note default
+            if (!soundEnabled) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } catch (e) { console.log(e); }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            if (soundEnabled) {
+                icon.setAttribute('data-lucide', 'volume-2');
+                playCuteSound(880);
+            } else {
+                icon.setAttribute('data-lucide', 'volume-x');
+            }
+            lucide.createIcons();
+        }
+
+        // Tab Navigation System
+        function switchTab(tabId) {
+            playCuteSound(659.25);
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('section-' + tabId).classList.remove('hidden');
+
+            // Update Nav Buttons State
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-pink-500', 'text-white', 'shadow-md');
+                btn.classList.add('bg-pink-100', 'text-pink-600');
+            });
+            const activeNav = document.getElementById('nav-' + tabId);
+            if (activeNav) {
+                activeNav.classList.remove('bg-pink-100', 'text-pink-600');
+                activeNav.classList.add('bg-pink-500', 'text-white', 'shadow-md');
+            }
+
+            // Scroll top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openSubject(subj) {
+            switchTab('materi');
+            filterSubjectTab(subj);
+        }
+
+        // Subject Filter inside Materi
+        function filterSubjectTab(subj) {
+            playCuteSound(523.25);
+            const cards = document.querySelectorAll('.materi-card');
+            cards.forEach(card => {
+                if (subj === 'all' || card.getAttribute('data-subject') === subj) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function filterMateri() {
+            const query = document.getElementById('materi-search').value.toLowerCase();
+            const cards = document.querySelectorAll('.materi-card');
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // ================= MATHEMATICS CALCULATOR =================
+        function calculateQuadratic() {
+            playCuteSound(783.99);
+            const a = parseFloat(document.getElementById('math-a').value) || 0;
+            const b = parseFloat(document.getElementById('math-b').value) || 0;
+            const c = parseFloat(document.getElementById('math-c').value) || 0;
+
+            const resDiv = document.getElementById('math-result');
+
+            if (a === 0) {
+                resDiv.innerHTML = "<span class='text-red-500'>Nilai 'a' tidak boleh nol pada fungsi kuadrat!</span>";
+                return;
+            }
+
+            const xp = -b / (2 * a);
+            const D = (b * b) - (4 * a * c);
+            const yp = -D / (4 * a);
+
+            let desc = D > 0 ? "Memotong sumbu X di 2 titik berbeda." : (D === 0 ? "Menyinggung sumbu X di 1 titik." : "Tidak memotong sumbu X (Definit).");
+
+            resDiv.innerHTML = `
+                ✨ <b class="text-pink-600">Titik Puncak (Xp, Yp):</b> (${xp.toFixed(2)}, ${yp.toFixed(2)}) <br>
+                📊 <b class="text-pink-600">Diskriminan (D):</b> ${D} (${desc})
+            `;
+        }
+
+        // ================= PUNNETT SQUARE BIOLOGY SIMULATOR =================
+        function runPunnett() {
+            playCuteSound(698.46);
+            const p1 = document.getElementById('parent1').value;
+            const p2 = document.getElementById('parent2').value;
+
+            const g1 = [p1[0], p1[1]];
+            const g2 = [p2[0], p2[1]];
+
+            const combinations = [
+                g1[0] + g2[0], g1[0] + g2[1],
+                g1[1] + g2[0], g1[1] + g2[1]
+            ].map(str => {
+                // normalize (e.g., wW -> Ww)
+                if (str === 'wW') return 'Ww';
+                return str;
+            });
+
+            const grid = document.getElementById('punnett-grid');
+            grid.innerHTML = `
+                <div class="bg-emerald-200 p-2 rounded-lg">♂ \\ ♀</div>
+                <div class="bg-emerald-100 p-2 rounded-lg">${g2[0]}</div>
+                <div class="bg-emerald-100 p-2 rounded-lg">${g2[1]}</div>
+
+                <div class="bg-emerald-100 p-2 rounded-lg">${g1[0]}</div>
+                <div class="bg-white p-2 rounded-lg border border-emerald-300">${getBunnyBadge(combinations[0])}</div>
+                <div class="bg-white p-2 rounded-lg border border-emerald-300">${getBunnyBadge(combinations[1])}</div>
+
+                <div class="bg-emerald-100 p-2 rounded-lg">${g1[1]}</div>
+                <div class="bg-white p-2 rounded-lg border border-emerald-300">${getBunnyBadge(combinations[2])}</div>
+                <div class="bg-white p-2 rounded-lg border border-emerald-300">${getBunnyBadge(combinations[3])}</div>
+            `;
+
+            // Calculate ratio
+            let whiteCount = 0;
+            let pinkCount = 0;
+            combinations.forEach(c => {
+                if (c.includes('W')) whiteCount++;
+                else pinkCount++;
+            });
+
+            document.getElementById('punnett-summary').innerHTML = `
+                Rasio Fenotipe Anak Bunny: <br>
+                🐰 <b>Bulu Putih Dominan:</b> ${whiteCount}/4 (${(whiteCount/4)*100}%) | 
+                🌸 <b>Bulu Pink Resesif:</b> ${pinkCount}/4 (${(pinkCount/4)*100}%)
+            `;
+        }
+
+        function getBunnyBadge(geno) {
+            const isWhite = geno.includes('W');
+            return `${geno} <br><span class="text-base">${isWhite ? '🐰⚪' : '🐰🌸'}</span>`;
+        }
+
+        // ================= PHYSICS NEWTON SIMULATOR =================
+        function updatePhysics() {
+            const force = parseFloat(document.getElementById('input-force').value);
+            const mass = parseFloat(document.getElementById('input-mass').value);
+
+            document.getElementById('force-val').innerText = force + " N";
+            document.getElementById('mass-val').innerText = mass + " kg";
+            document.getElementById('arrow-force').innerText = force + "N";
+
+            const accel = force / mass;
+            document.getElementById('accel-result').innerText = accel.toFixed(2) + " m/s²";
+
+            // Animate object position
+            const obj = document.getElementById('physics-object');
+            const moveAmt = Math.min(accel * 8, 220); // Scale for visual canvas
+            obj.style.transform = `translateX(${moveAmt}px)`;
+        }
+
+        // ================= FLASHCARDS SYSTEM =================
+        const flashcardData = [
+            { cat: "Matematika", q: "Apa rumus Diskriminan (D) fungsi kuadrat?", a: "D = b² - 4ac", detail: "D > 0 (2 akar nyata), D = 0 (1 akar kembar), D < 0 (imajiner)." },
+            { cat: "Biologi", q: "Apa bunyi Hukum I Mendel?", a: "Hukum Segregasi Bebas", detail: "Pasangan alel berpisah secara bebas saat pembentukan gamet." },
+            { cat: "Fisika", q: "Bagaimana rumus Hukum II Newton?", a: "F = m × a", detail: "F = Gaya (Newton), m = Massa (kg), a = Percepatan (m/s²)." },
+            { cat: "Bahasa Inggris", q: "Rumus Conditional Sentence Type 1?", a: "If + Present, Will + V1", detail: "Digunakan untuk pengandaian yang mungkin terjadi di masa depan." },
+            { cat: "Bahasa Indonesia", q: "Tiga bagian struktur Teks Eksposisi?", a: "Tesis - Argumentasi - Penegasan Ulang", detail: "Tesis berisi pendapat awal, argumentasi memuat bukti pendukung." }
+        ];
+
+        let currentFcIdx = 0;
+        let isFlipped = false;
+
+        function updateCardDisplay() {
+            isFlipped = false;
+            document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+            const data = flashcardData[currentFcIdx];
+            document.getElementById('fc-category').innerText = data.cat;
+            document.getElementById('fc-question').innerText = data.q;
+            document.getElementById('fc-answer').innerText = data.a;
+            document.getElementById('fc-detail').innerText = data.detail;
+            document.getElementById('fc-num').innerText = `Kartu ${currentFcIdx + 1} / ${flashcardData.length}`;
+        }
+
+        function flipCard() {
+            playCuteSound(500);
+            isFlipped = !isFlipped;
+            const inner = document.getElementById('flashcard-inner');
+            if (isFlipped) {
+                inner.classList.add('rotate-y-180');
+            } else {
+                inner.classList.remove('rotate-y-180');
+            }
+        }
+
+        function nextCard() {
+            playCuteSound(600);
+            currentFcIdx = (currentFcIdx + 1) % flashcardData.length;
+            updateCardDisplay();
+        }
+
+        function prevCard() {
+            playCuteSound(600);
+            currentFcIdx = (currentFcIdx - 1 + flashcardData.length) % flashcardData.length;
+            updateCardDisplay();
+        }
+
+        function shuffleCards() {
+            playCuteSound(800);
+            flashcardData.sort(() => Math.random() - 0.5);
+            currentFcIdx = 0;
+            updateCardDisplay();
+        }
+
+        // ================= QUIZ ZONE SYSTEM =================
+        const quizQuestions = [
+            {
+                q: "Jika fungsi kuadrat memiliki D = 0, maka grafiknya akan...",
+                options: ["Memotong sumbu X di 2 titik", "Menyinggung sumbu X di 1 titik", "Tidak menyentuh sumbu X", "Berbentuk garis lurus"],
+                answer: 1
+            },
+            {
+                q: "Alel W (Putih) dominan terhadap w (Pink). Persilangan Ww x Ww menghasilkan persentase kelinci berbulu pink sebesar...",
+                options: ["100%", "75%", "50%", "25%"],
+                answer: 3
+            },
+            {
+                q: "BunBun mendorong kotak 10 kg dengan gaya 50 N. Percepatan yang dialami kotak adalah...",
+                options: ["5 m/s²", "10 m/s²", "500 m/s²", "0.2 m/s²"],
+                answer: 0
+            },
+            {
+                q: "Bagian Teks Eksposisi yang berisi alasan/fakta pendukung pendapat disebut...",
+                options: ["Tesis", "Klimaks", "Argumentasi", "Penegasan Ulang"],
+                answer: 2
+            },
+            {
+                q: "Manakah kalimat Conditional Type 1 yang benar?",
+                options: [
+                    "If BunBun study, she passed.",
+                    "If BunBun studies hard, she will pass.",
+                    "If BunBun would study, she will pass.",
+                    "If BunBun studied, she would pass."
+                ],
+                answer: 1
+            }
+        ];
+
+        let quizIndex = 0;
+        let quizScore = 0;
+
+        function startQuiz() {
+            playCuteSound(700);
+            quizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quiz-intro').classList.add('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-body').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = quizQuestions[quizIndex];
+            document.getElementById('quiz-progress-text').innerText = `Soal ${quizIndex + 1} dari ${quizQuestions.length}`;
+            document.getElementById('quiz-score-live').innerHTML = `<i data-lucide="star" class="w-3.5 h-3.5 text-yellow-500 fill-yellow-500"></i> Skor: ${quizScore}`;
+            document.getElementById('quiz-question').innerText = q.q;
+
+            const optContainer = document.getElementById('quiz-options');
+            optContainer.innerHTML = '';
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full p-3.5 text-left text-xs sm:text-sm font-semibold rounded-xl border-2 border-pink-200 bg-white hover:bg-pink-50 hover:border-pink-300 transition btn-press flex items-center justify-between';
+                btn.innerHTML = `<span>${opt}</span> <i data-lucide="circle" class="w-4 h-4 text-pink-300"></i>`;
+                btn.onclick = () => checkAnswer(idx, btn);
+                optContainer.appendChild(btn);
+            });
+            lucide.createIcons();
+        }
+
+        function checkAnswer(selectedIdx, btnElement) {
+            const q = quizQuestions[quizIndex];
+            const allBtns = document.getElementById('quiz-options').children;
+            for (let b of allBtns) b.disabled = true;
+
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.classList.remove('hidden');
+
+            if (selectedIdx === q.answer) {
+                playCuteSound(880);
+                btnElement.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-800');
+                feedback.className = 'p-3 rounded-2xl text-xs font-bold text-center bg-emerald-100 text-emerald-700';
+                feedback.innerText = '✨ Benar Sekali! BunBun bangga! 🐰🎉';
+                quizScore += 20;
+            } else {
+                playCuteSound(300, 'sawtooth');
+                btnElement.classList.add('bg-red-100', 'border-red-400', 'text-red-800');
+                allBtns[q.answer].classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-800');
+                feedback.className = 'p-3 rounded-2xl text-xs font-bold text-center bg-red-100 text-red-700';
+                feedback.innerText = '😅 Yaaah hampir benar! Tetap semangat ya!';
+            }
+
+            document.getElementById('quiz-score-live').innerHTML = `<i data-lucide="star" class="w-3.5 h-3.5 text-yellow-500 fill-yellow-500"></i> Skor: ${quizScore}`;
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            quizIndex++;
+            if (quizIndex < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-body').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            document.getElementById('final-score').innerText = quizScore;
+
+            if (quizScore >= 80) {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                document.getElementById('final-message').innerText = "Luar biasa! Kamu master materi SMA! 🌟✨";
+            } else {
+                document.getElementById('final-message').innerText = "Bagus sekali! Pelajari lagi materinya untuk nilai sempurna! 🥕";
+            }
+        }
+
+        function claimReward() {
+            playCuteSound(1000);
+            let currentStars = parseInt(document.getElementById('user-stars').innerText) || 120;
+            currentStars += quizScore;
+            document.getElementById('user-stars').innerText = currentStars;
+            confetti({ particleCount: 50, spread: 50 });
+            alert("✨ Selamat! " + quizScore + " Wortel berhasil diklaim ke profilmu!");
+        }
+
+        // ================= POMODORO TIMER SYSTEM =================
+        let pomoMinutes = 25;
+        let pomoSeconds = 0;
+        let pomoTimerId = null;
+        let isRunning = false;
+
+        function updatePomoDisplay() {
+            const m = String(pomoMinutes).padStart(2, '0');
+            const s = String(pomoSeconds).padStart(2, '0');
+            document.getElementById('pomo-timer').innerText = `${m}:${s}`;
+        }
+
+        function togglePomodoro() {
+            playCuteSound(600);
+            const btn = document.getElementById('pomo-start-btn');
+            if (isRunning) {
+                clearInterval(pomoTimerId);
+                isRunning = false;
+                btn.innerHTML = `<i data-lucide="play" class="w-4 h-4"></i> Lanjutkan`;
+            } else {
+                isRunning = true;
+                btn.innerHTML = `<i data-lucide="pause" class="w-4 h-4"></i> Jeda`;
+                pomoTimerId = setInterval(() => {
+                    if (pomoSeconds === 0) {
+                        if (pomoMinutes === 0) {
+                            clearInterval(pomoTimerId);
+                            isRunning = false;
+                            playCuteSound(1000);
+                            alert("🔔 Waktu Pomodoro selesai! Waktunya istirahat bersama BunBun! 🥕");
+                            return;
+                        }
+                        pomoMinutes--;
+                        pomoSeconds = 59;
+                    } else {
+                        pomoSeconds--;
+                    }
+                    updatePomoDisplay();
+                }, 1000);
+            }
+            lucide.createIcons();
+        }
+
+        function resetPomodoro() {
+            playCuteSound(400);
+            clearInterval(pomoTimerId);
+            isRunning = false;
+            pomoMinutes = 25;
+            pomoSeconds = 0;
+            updatePomoDisplay();
+            document.getElementById('pomo-start-btn').innerHTML = `<i data-lucide="play" class="w-4 h-4"></i> Mulai Fokus`;
+            lucide.createIcons();
+        }
+
+        function setPomoMode(mode) {
+            playCuteSound(500);
+            resetPomodoro();
+            if (mode === 'study') {
+                pomoMinutes = 25;
+                document.getElementById('pomo-bunny-emoji').innerText = '📚🐰';
+                document.getElementById('pomo-status').innerText = 'BunBun sedang menemanimu belajar...';
+                document.getElementById('mode-study').className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-pink-500 text-white';
+                document.getElementById('mode-break').className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-pink-100 text-pink-600';
+            } else {
+                pomoMinutes = 5;
+                document.getElementById('pomo-bunny-emoji').innerText = '🥕🐰';
+                document.getElementById('pomo-status').innerText = 'Waktunya nyemil wortel & istirahat!';
+                document.getElementById('mode-break').className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-pink-500 text-white';
+                document.getElementById('mode-study').className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-pink-100 text-pink-600';
+            }
+            updatePomoDisplay();
+        }
+
+        // Initialize Icons & Interactivity on Load
+        window.onload = function() {
+            lucide.createIcons();
+            runPunnett();
+            updatePhysics();
+            updateCardDisplay();
+            updatePomoDisplay();
+        };
+    </script>
+</body>
+</html>
